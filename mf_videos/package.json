@@ -1,9 +1,8 @@
 {
   "name": "mf_videos",
   "version": "1.0.0",
-  "main": "dist/index.js",
   "scripts": {
-    "start": "node src/index.js",
+    "start": "http-server public -p 3002 -c-1",
     "build": "tsc && npx sass src/styles.scss public/styles.css",
     "test": "jest"
   },
