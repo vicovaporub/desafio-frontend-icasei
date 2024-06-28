@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "http-server public -p 3001 -c-1",
-    "build": "tsc && npx sass src/styles.scss public/styles.css",
+    "build": "tsc && npx sass src/styles.scss public/styles/styles.css",
     "test": "jest"
   },
   "license": "ISC",
