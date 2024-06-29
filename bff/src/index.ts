@@ -11,6 +11,7 @@ const app = express()
 const port = 3000
 
 app.use(cors())
+app.use(express.json())
 
 const templateBuilder = (param: string = '') => {
   const DRAWER_URL = process.env.DRAWER_URL || ''
@@ -30,12 +31,40 @@ app.get('/', (req, res) => {
   res.send(templateBuilder())
 })
 
-app.get('/api/test', (req, res) => {
-  const content = `<h1>Test</h1>`
-  res.send(content)
-})
+app.post('/api/getVideos', async (req, res) => {
+  console.log(`Request recieved: ${req.body}`)
+  const  query  = req.body.text; 
+  console.log('query:', query);
+  const YT_API_KEY = process.env.YT_API_KEY
+  const YT_API_URL = process.env.YT_API_URL
+  const part = 'snippet'
+  const type = 'video'
+  const maxResults = 1
 
+  const searchParamsString = `?q=${query}&key=${YT_API_KEY}&part=${part}&type=${type}&maxResults=${maxResults}`
+  console.log(`${YT_API_URL}${searchParamsString}`)
 
+  try {
+    const response = await axios.get(`${YT_API_URL}${searchParamsString}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Referer': process.env.YT_API_REFERER
+      }
+    })
+
+    const videos = response.data.items
+    console.log(videos)
+    res.send(videos)
+
+  } catch (error) {
+    console.log('Error:', error)
+  }
+  
+});
+
+  
+
+ 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
