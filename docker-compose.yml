@@ -9,7 +9,11 @@ services:
     build: ./mf_drawer
     ports:
       - "3001:3001"
+    volumes:
+      - ./mf_drawer:/usr/src/app
   mf_video:
     build: ./mf_videos
     ports:
       - "3002:3002"
+    volumes:
+      - ./mf_videos:/usr/src/app

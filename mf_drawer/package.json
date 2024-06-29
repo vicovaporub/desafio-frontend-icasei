@@ -2,14 +2,16 @@
   "name": "mf_drawer",
   "version": "1.0.0",
   "scripts": {
-    "start": "http-server public -p 3001 -c-1",
+    "start": "npm run tsc:watch & npm run sass:watch & live-server public --port=3001 --no-browser --watch=public",
+    "tsc:watch": "tsc -w",
+    "sass:watch": "npx sass --watch src/styles.scss public/styles/styles.css",
     "build": "tsc && npx sass src/styles.scss public/styles/styles.css",
     "test": "jest"
   },
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "http-server": "^14.1.1",
+    "live-server": "^1.2.2",
     "sass": "^1.77.6",
     "typescript": "^5.5.2"
   },
