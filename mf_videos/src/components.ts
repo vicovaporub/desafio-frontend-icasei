@@ -30,15 +30,16 @@ export class VideoComponent extends HTMLElement {
       return ['title', 'thumbnail', 'description'];
     }
   
-    attributeChangedCallback(name: string, value: string) {
+    attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+      console.log('attributeChangedCallback', name, newValue)
       if (name === 'title') {
-        this.titleElement.textContent = value;
+        this.titleElement.textContent = newValue;
       }
       if (name === 'thumbnail') {
-        this.thumbnailElement.src = value;
+        this.thumbnailElement.src = newValue;
       }
       if (name === 'description') {
-        this.descriptionElement.textContent = value;
+        this.descriptionElement.textContent = newValue;
       }
     }
   }

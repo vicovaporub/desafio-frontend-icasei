@@ -55,13 +55,14 @@ const searchVideos = async (): Promise<Video | undefined> => {
 
     videos.forEach((video: Video) => {
       const listItem = document.createElement('li');
-  
 
       const videoComponent = new VideoComponent();
 
       videoComponent.setAttribute('title', video.snippet.title);
       videoComponent.setAttribute('thumbnail', video.snippet.thumbnails.default.url);
       videoComponent.setAttribute('description', video.snippet.description);
+
+      
 
       listItem.appendChild(videoComponent.shadowRoot!);
 
