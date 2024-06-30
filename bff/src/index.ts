@@ -1,4 +1,4 @@
-import express from 'express'
+import express, { Request, Response } from 'express'
 import path from 'path'
 import fs from 'fs'
 import dotenv from 'dotenv'
@@ -16,7 +16,6 @@ app.use(express.json())
 const templateBuilder = (param: string = '') => {
   const DRAWER_URL = process.env.DRAWER_URL || ''
   const VIDEOS_URL = process.env.VIDEO_URL || ''
-  //const VIDEOS_URL_WITH_PARAM = `${VIDEOS_URL}${param}`
   const template = fs.readFileSync(path.join(__dirname, 'templates', 'index.html'), 'utf8')
 
   const finalTemplate = template.replace(/{{VIDEOS_URL}}/g, VIDEOS_URL)
@@ -26,12 +25,12 @@ const templateBuilder = (param: string = '') => {
   
 }
 
-app.get('/', (req, res) => {
+app.get('/', (req: Request, res: Response) => {
   console.log('Request recieved')
   res.send(templateBuilder())
 })
 
-app.post('/api/getVideos', async (req, res) => {
+app.post('/api/getVideos', async (req: Request, res: Response) => {
   console.log(`Request recieved: ${req.body}`)
   const  query  = req.body.text; 
   console.log('query:', query);
