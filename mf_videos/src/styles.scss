@@ -9,6 +9,7 @@
   display: flex;
   justify-content: center;
   gap: 0.5rem;
+  margin-top: 15px;
 }
 
 .search-input {
@@ -20,12 +21,12 @@
   &:focus {
     outline-color: #007aff;
   }
-
 }
 
 .search-button {
-  border: 1px solid #90caf9;
-  background-color: #90caf9;
+  border: 1px solid #42a5f6;
+  box-shadow: 0px 0px 0px 0.2px rgba(44, 125, 179, 0.3);
+  background-color: #42a5f6;
   text-decoration: none;
   color: #fff;
   padding: 0.3rem;
@@ -86,6 +87,10 @@
 @media screen and (min-width: 768px) {
   .videos-header {
     justify-content: start;
+    margin-top: 10px;
+  }
+  .search-input {
+    width: 25vw;
   }
   .video-list {
     display: grid;
