@@ -2,6 +2,7 @@ import { VideoComponent } from "./video-component.js"
 const searchInput = document.getElementById('search-input') as HTMLInputElement
 const searchButton = document.getElementById('search-button') as HTMLButtonElement
 const videoList = document.getElementById('video-list') as HTMLUListElement
+const favList = document.getElementById('favs-list') as HTMLUListElement
 
 
 interface Video {
@@ -31,6 +32,13 @@ interface Thumbnail {
   height: number;
   url: string;
   width: number;
+}
+
+interface Favorite {
+  channel: string,
+  thumbnail: string,
+  id: string,
+  title: string
 }
 
 const searchVideos = async (): Promise<Video | undefined> => {
@@ -84,11 +92,6 @@ const handleSearch = async (event: Event): Promise<void> => {
   }
 };
 
-const playVideo = async (event: Event): Promise<void> => {
-  if (event.type === 'click') {
-    console.log(`'playvido`)
-  }
-}
 
 
 const getModeParameter = () => {
@@ -102,6 +105,34 @@ window.onload = () => {
   document.body.classList.add(mode!);
 }
 
+
+const consoleLogFavs = () => {
+  const favorites = JSON.parse(localStorage.getItem('favorite_videos') || '[]');
+  console.log('Favorites:', favorites);
+
+  favorites.forEach((fav: Favorite) => {
+
+    const listItem = document.createElement('li');
+    listItem.setAttribute('class', 'video-list-item');
+    const videoComponent = new VideoComponent();
+
+    videoComponent.setAttribute('video-id', fav.id);
+    videoComponent.setAttribute('video-title', fav.title);
+    videoComponent.setAttribute('video-channel', fav.channel);
+    videoComponent.setAttribute('video-thumbnail', fav.thumbnail);
+
+    console.log(listItem)
+
+    listItem.appendChild(videoComponent);
+    listItem.style.listStyle = 'none';
+
+    favList.appendChild(listItem);
+
+
+  });
+}
+
+consoleLogFavs()
 
 searchButton.addEventListener('click', handleSearch);
 searchInput.addEventListener('keydown', handleSearch);

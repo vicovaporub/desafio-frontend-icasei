@@ -8,13 +8,14 @@
 </head>
 <body>
   <div id="mf-videos" class="mf-videos">
-    <header class="videos-header" id="videos-header">
-      <input 
-      type="text" 
-      id="search-input"
-      class="search-input"
-      placeholder="Inserir termos de pesquisa"
-      aria-label="Search for videos"
+    <div id="videos-page" class="videos-page">
+      <header class="videos-header" id="videos-header">
+        <input 
+        type="text" 
+        id="search-input"
+        class="search-input"
+        placeholder="Inserir termos de pesquisa"
+        aria-label="Search for videos"
         />
         <button id="search-button" class="search-button">Pesquisar</button>
       </header>
@@ -23,6 +24,17 @@
           
         </ul>
       </div>
+    </div>
+
+    <div id="favs-page" class="favs-page">
+      <header class="favs-header" id="favs-header">
+        <h2>Favoritos</h2>
+      </header>
+      <div class="favs-container">
+        <ul id="favs-list" class="favs-list">
+        </ul>
+      </div>
+
     </div>
       
 

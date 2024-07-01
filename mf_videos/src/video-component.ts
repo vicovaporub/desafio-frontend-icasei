@@ -10,18 +10,18 @@ export class VideoComponent extends HTMLElement {
 
   constructor() {
     super();
-
+  
     const shadow = this.attachShadow({ mode: 'open' });
-
+  
     const mainContainer = document.createElement('div');
     mainContainer.setAttribute('class', 'search-video-container');
-
+  
     this.thumbnailContainer = document.createElement('div');
     this.thumbnailContainer.setAttribute('class', 'video-thumbnail-container');
-
+  
     this.thumbnailElement = document.createElement('img');
     this.thumbnailElement.setAttribute('class', 'video-thumbnail');
-
+  
     this.playButtonElement = document.createElement('div');
     this.playButtonElement.setAttribute('class', 'play-button');
     this.playButtonElement.innerHTML = `
@@ -31,19 +31,19 @@ export class VideoComponent extends HTMLElement {
           M102,130V50l68,40L102,130z"/>
       </svg>
     `;
-
+  
     this.thumbnailContainer.appendChild(this.thumbnailElement);
     this.thumbnailContainer.appendChild(this.playButtonElement);
-
+  
     this.iframeElement = document.createElement('iframe');
     this.iframeElement.setAttribute('class', 'video-player');
-    this.iframeElement.style.display = 'none'; // Hide iframe initially
+    this.iframeElement.style.display = 'none';
     this.iframeElement.setAttribute('frameborder', '0');
     this.iframeElement.setAttribute('allowfullscreen', 'true');
-
+  
     this.infoContainer = document.createElement('div');
     this.infoContainer.setAttribute('class', 'video-info');
-
+  
     this.titleElement = document.createElement('h2');
     this.titleElement.setAttribute('class', 'video-title');
     this.infoContainer.appendChild(this.titleElement);
@@ -51,161 +51,230 @@ export class VideoComponent extends HTMLElement {
     this.favButtonElement = document.createElement('div');
     this.favButtonElement.setAttribute('class', 'fav-button');
     this.favButtonElement.innerHTML = `★`;
-
+    this.updateFavoriteButtonState(); 
+  
     this.infoContainer.appendChild(this.favButtonElement);
     
     this.channelElement = document.createElement('p');
     this.channelElement.setAttribute('class', 'video-channel');
     this.infoContainer.appendChild(this.channelElement);
-
-
-
-
+  
     mainContainer.appendChild(this.thumbnailContainer);
-    mainContainer.appendChild(this.iframeElement); // Append iframe to main container
+    mainContainer.appendChild(this.iframeElement);
     mainContainer.appendChild(this.infoContainer);
-
+  
     shadow.appendChild(mainContainer);
-
-    // Add click event to thumbnail and play button to load and show iframe
+  
     const showVideo = () => {
       const videoId = this.getAttribute('video-id');
       if (videoId) {
         const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&controls=1`;
         this.iframeElement.src = embedUrl;
         this.iframeElement.style.display = 'block';
-
-        // Hide thumbnail and play button after video starts playing
+  
         this.thumbnailElement.style.display = 'none';
         this.playButtonElement.style.display = 'none';
       }
     };
-
+  
     this.thumbnailContainer.addEventListener('click', showVideo);
     this.playButtonElement.addEventListener('click', showVideo);
-
-    // Inline CSS for VideoComponent
+  
     const style = document.createElement('style');
     style.textContent = `
-    .search-video-container {
-      position: relative;
-    }
+      .search-video-container {
+        position: relative;
+      }
   
-    .video-thumbnail-container {
-      position: relative;
-      display: inline-block;
-      overflow: hidden; 
-    }
+      .video-thumbnail-container {
+        position: relative;
+        display: inline-block;
+        overflow: hidden; 
+      }
   
-    .video-thumbnail {
-      width: 100%;
-      object-fit: cover;
-      border: 1px solid #90caf9;
-      border-radius: 5px;
-      transition: transform 0.3s ease-in-out;
-    }
+      .video-thumbnail {
+        width: 100%;
+        object-fit: cover;
+        border: 1px solid #90caf9;
+        border-radius: 5px;
+        transition: transform 0.3s ease-in-out;
+      }
   
-    .video-thumbnail-container:hover {
-      cursor: pointer;
-    }
+      .video-thumbnail-container:hover {
+        cursor: pointer;
+      }
   
-    .play-button {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) scale(1);
-      cursor: pointer;
-      width: 65px;
-      height: 65px;
-      z-index: 1;
-      transition: transform 0.1s ease-in-out;
-      transform-origin: center center; 
-    }
+      .play-button {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(1);
+        cursor: pointer;
+        width: 65px;
+        height: 65px;
+        z-index: 1;
+        transition: transform 0.1s ease-in-out;
+        transform-origin: center center; 
+      }
   
-    .video-thumbnail-container:hover .play-button {
-      transform: translate(-50%, -50%) scale(1.2);
-    }
+      .video-thumbnail-container:hover .play-button {
+        transform: translate(-50%, -50%) scale(1.2);
+      }
   
-    .video-player {
-      width: 100%;
-      height: 195px;
-    }
-  
-    .video-info {
-      display: flex;
-      flex-direction: column;
-      gap: 1px;
-      position: relative;
-      margin: 0;
-      padding: 0;
-    }
-  
-    .video-title {
-      margin: 0;
-      font-size: 1.2rem;
-      text-align: left;
-    }
-  
-    .video-channel {
-      color: #606060;
-      font-size: 1rem;
-      border-bottom: 1px solid #606060;
-      padding-bottom: 10px;
-    }
-  
-    .fav-button {
-      position: absolute;
-      top: 30%;
-      right: 10%;
-      font-size: 2.5rem;
-      color: #b7b7b7;
-      cursor: pointer;
-      transition: transform 0.1s ease-in-out;
-      transform-origin: center center;
-    }
-  
-    .fav-button:hover {
-      transform: scale(1.2);
-    }
-  
-    @media (min-width: 768px) {
       .video-player {
+        width: 100%;
+        height: 195px;
+      }
+  
+      .video-info {
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+        position: relative;
         margin: 0;
-        width: 400px;
-        height: 230px;
+        padding: 0;
+      }
+  
+      .video-title {
+        margin: 0;
+        font-size: 1.2rem;
+        text-align: left;
       }
   
       .video-channel {
-        border: none;
+        color: #606060;
+        font-size: 1rem;
+        border-bottom: 1px solid #606060;
+        padding-bottom: 10px;
       }
   
       .fav-button {
-        top: 40%;
-        right: 5%;
+        position: absolute;
+        top: 30%;
+        right: 10%;
+        font-size: 2.5rem;
+        color: #b7b7b7;
+        cursor: pointer;
+        transition: transform 0.1s ease-in-out, color 0.3s ease-in-out;
+        transform-origin: center center;
+      }
+  
+      .fav-button:hover {
+        transform: scale(1.2);
+      }
+  
+      .fav-button.favorited {
+        color: #e0cd1dc9; 
+      }
+  
+      @media (min-width: 768px) {
+        .video-player {
+          margin: 0;
+          width: 400px;
+          height: 230px;
+        }
+  
+        .video-channel {
+          border: none;
+        }
+  
+        .fav-button {
+          top: 40%;
+          right: 5%;
+        }
+      }
+    `;
+  
+    shadow.appendChild(style);
+  
+    this.favButtonElement.addEventListener('click', () => {
+      this.handleFavorite();
+    });
+  }
+  
+  updateFavoriteButtonState() {
+    const videoId = this.getAttribute('video-id');
+    if (videoId) {
+      const favorites = JSON.parse(localStorage.getItem('favorite_videos') || '[]');
+      const isFavorite = favorites.some((fav: any) => fav.id === videoId);
+      if (isFavorite) {
+        this.favButtonElement.classList.add('favorited');
+      } else {
+        this.favButtonElement.classList.remove('favorited');
       }
     }
-  `;
-
-    shadow.appendChild(style);
   }
-
+  
+  handleFavorite() {
+    const videoId = this.getAttribute('video-id');
+    const videoTitle = this.getAttribute('video-title');
+    const videoChannel = this.getAttribute('video-channel');
+    const videoThumbnail = this.getAttribute('video-thumbnail');
+  
+    if (videoId && videoTitle && videoChannel && videoThumbnail) {
+      let favorites: any[] = JSON.parse(localStorage.getItem('favorite_videos') || '[]');
+  
+      const existingIndex = favorites.findIndex((fav: any) => fav.id === videoId);
+      if (existingIndex !== -1) {
+        favorites.splice(existingIndex, 1);
+        localStorage.setItem('favorite_videos', JSON.stringify(favorites));
+  
+        this.favButtonElement.classList.remove('favorited');
+  
+        console.log('Video removed from favorites:', {
+          id: videoId,
+          title: videoTitle,
+          channel: videoChannel,
+          thumbnail: videoThumbnail
+        });
+      } else {
+        favorites.push({
+          id: videoId,
+          title: videoTitle,
+          channel: videoChannel,
+          thumbnail: videoThumbnail
+        });
+  
+        localStorage.setItem('favorite_videos', JSON.stringify(favorites));
+  
+        this.favButtonElement.classList.add('favorited');
+  
+        console.log('Video added to favorites:', {
+          id: videoId,
+          title: videoTitle,
+          channel: videoChannel,
+          thumbnail: videoThumbnail
+        });
+      }
+    } else {
+      console.error('Missing video information');
+    }
+  }
+  
+  
   static get observedAttributes() {
     return ['video-id', 'video-title', 'video-channel', 'video-thumbnail'];
   }
-
+  
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
     if (name.toLowerCase() === 'video-title') {
       this.titleElement.textContent = newValue;
     }
-
+  
     if (name.toLowerCase() === 'video-channel') {
       this.channelElement.textContent = newValue;
     }
-
+  
     if (name.toLowerCase() === 'video-thumbnail') {
       this.thumbnailElement.src = newValue;
     }
+  
+    if (name.toLowerCase() === 'video-id') {
+      this.updateFavoriteButtonState();
+    }
   }
+  
+  
 }
 
 customElements.define('video-component', VideoComponent);
