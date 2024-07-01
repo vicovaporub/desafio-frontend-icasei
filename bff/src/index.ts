@@ -16,7 +16,7 @@ app.use(express.json())
 app.use(express.static('public'))
 
 const templateBuilder = (param: string = '') => {
-  const VIDEOS_URL = process.env.VIDEO_URL || ''
+  const VIDEOS_URL = process.env.VIDEOS_URL || ''
   const DRAWER_URL = process.env.DRAWER_URL || ''
   const VIDEOS_URL_PARAM = `${VIDEOS_URL}${param}`
   const DRAWER_URL_PARAM = `${DRAWER_URL}${param}`
@@ -28,12 +28,12 @@ const templateBuilder = (param: string = '') => {
   return finalTemplate
 }
 
-app.get('/videos', (req, res) => {
+app.get('/videos', (req: Request, res: Response) => {
   console.log(`entrou no videos`)
   res.send(templateBuilder('?mode=videos'));
 });
 
-app.get('/favs', (req, res) => {
+app.get('/favs', (req: Request, res: Response) => {
   console.log(`entrou no favs`)
   res.send(templateBuilder('?mode=favs'));
 });
@@ -81,6 +81,6 @@ app.post('/api/getVideos', async (req: Request, res: Response) => {
 
  
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
+  console.log(`APP listening at http://localhost:${port}`)
 })
 
