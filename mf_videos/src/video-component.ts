@@ -42,15 +42,15 @@ export class VideoComponent extends HTMLElement {
     }
   
     attributeChangedCallback(name: string, oldValue: string, newValue: string) {
-      if (name === 'video-id') {
+      if (name.toLowerCase() === 'video-id') {
         this.iframeElement.src = `https://www.youtube.com/embed/${newValue}`
       }
 
-      if (name === 'video-title') {
+      if (name.toLowerCase() === 'video-title') {
         this.titleElement.textContent = newValue
       }
 
-      if (name === 'video-channel') {
+      if (name.toLowerCase() === 'video-channel') {
         this.channelElement.textContent = newValue
       }
     }
