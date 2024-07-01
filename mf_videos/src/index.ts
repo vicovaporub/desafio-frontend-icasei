@@ -34,20 +34,20 @@ interface Thumbnail {
 }
 
 const searchVideos = async (): Promise<Video | undefined> => {
-  const text = searchInput.value; 
+  const text = searchInput.value;
   if (!text) {
-    return undefined
+    return undefined;
   }
-  
+
   try {
     const response = await fetch('http://localhost:3000/api/getVideos', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ text }) 
+      body: JSON.stringify({ text })
     });
-    
+
     const videos = await response.json();
     console.log(videos);
 
@@ -61,14 +61,15 @@ const searchVideos = async (): Promise<Video | undefined> => {
       videoComponent.setAttribute('video-id', video.id.videoId);
       videoComponent.setAttribute('video-title', video.snippet.title);
       videoComponent.setAttribute('video-channel', video.snippet.channelTitle);
+      videoComponent.setAttribute('video-thumbnail', video.snippet.thumbnails.medium.url);
 
-      listItem.appendChild(videoComponent.shadowRoot!);
+      listItem.appendChild(videoComponent);
 
       videoList.appendChild(listItem);
 
       listItem.style.listStyle = 'none';
 
-    })
+    });
 
   } catch (error) {
     console.log('Error:', error);
@@ -76,11 +77,18 @@ const searchVideos = async (): Promise<Video | undefined> => {
   }
 };
 
+
 const handleSearch = async (event: Event): Promise<void> => {
   if (event.type === 'click' || (event instanceof KeyboardEvent && event.key === 'Enter')) {
     await searchVideos();
   }
 };
+
+const playVideo = async (event: Event): Promise<void> => {
+  if (event.type === 'click') {
+    console.log(`'playvido`)
+  }
+}
 
 
 const getModeParameter = () => {
@@ -97,4 +105,5 @@ window.onload = () => {
 
 searchButton.addEventListener('click', handleSearch);
 searchInput.addEventListener('keydown', handleSearch);
+
 
