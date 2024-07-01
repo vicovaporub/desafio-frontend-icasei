@@ -55,18 +55,18 @@ const searchVideos = async (): Promise<Video | undefined> => {
 
     videos.forEach((video: Video) => {
       const listItem = document.createElement('li');
-
+      listItem.setAttribute('class', 'video-list-item');
       const videoComponent = new VideoComponent();
 
-      videoComponent.setAttribute('title', video.snippet.title);
-      videoComponent.setAttribute('thumbnail', video.snippet.thumbnails.default.url);
-      videoComponent.setAttribute('description', video.snippet.description);
-
-      
+      videoComponent.setAttribute('video-id', video.id.videoId);
+      videoComponent.setAttribute('video-title', video.snippet.title);
+      videoComponent.setAttribute('video-channel', video.snippet.channelTitle);
 
       listItem.appendChild(videoComponent.shadowRoot!);
 
       videoList.appendChild(listItem);
+
+      listItem.style.listStyle = 'none';
 
     })
 
@@ -81,6 +81,19 @@ const handleSearch = async (event: Event): Promise<void> => {
     await searchVideos();
   }
 };
+
+
+const getModeParameter = () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get('mode');
+}
+
+window.onload = () => {
+  const mode = getModeParameter();
+  document.body.className = ''
+  document.body.classList.add(mode!);
+}
+
 
 searchButton.addEventListener('click', handleSearch);
 searchInput.addEventListener('keydown', handleSearch);
