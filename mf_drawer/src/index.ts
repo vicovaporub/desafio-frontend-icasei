@@ -23,31 +23,30 @@ window.onload = () => {
   document.body.classList.add(mode!);
 
   if (document.body.className === 'favs') {
-    favsButton.style.backgroundColor = '#90caf9';
+    favsButton.style.backgroundColor = '#42a5f6';
     favsButton.style.color = '#fff';
     videosButton.style.backgroundColor = '#fff';
-    videosButton.style.color = '#90caf9';
+    videosButton.style.color = '#42a5f6';
 
     videosButton.addEventListener('mouseover', () => {
-      videosButton.style.backgroundColor = '#007aff'
-      videosButton.style.color = '#fff'
-    })
+      videosButton.style.backgroundColor = '#007aff';
+      videosButton.style.color = '#fff';
+    });
 
     videosButton.addEventListener('mouseout', () => {
-      videosButton.style.backgroundColor = '#fff'
-      videosButton.style.color = '#90caf9'
-    })
+      videosButton.style.backgroundColor = '#fff';
+      videosButton.style.color = '#42a5f6';
+    });
 
     favsButton.addEventListener('mouseover', () => {
-      favsButton.style.backgroundColor = '#007aff'
-      favsButton.style.color = '#fff'
-    })
+      favsButton.style.backgroundColor = '#007aff';
+      favsButton.style.color = '#fff';
+    });
 
     favsButton.addEventListener('mouseout', () => {
-      favsButton.style.backgroundColor = '#fff'
-      favsButton.style.color = '#90caf9'
-    })
-    
-  }
+      favsButton.style.backgroundColor = '#42a5f6';
+      favsButton.style.color = '#fff';
+    });
+}
 }
 

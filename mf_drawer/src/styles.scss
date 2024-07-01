@@ -37,6 +37,10 @@
         background-color:#007aff
       }
 
+      &:active {
+        transform: scale(0.9);
+      }
+
     }
  
     &:last-child {
@@ -46,12 +50,18 @@
         border: 1px solid #90caf9;
 
         &:hover {
-          background-color: #f0f0f0;
+          background-color: #007aff;
+          color: #fff;
+        }
+
+        &:active {
+          transform: scale(0.9);
         }
       }
     }
   } 
 }
+
 
 @media screen and (min-width: 200px ) and (max-width: 350px) {
     .link-list {
