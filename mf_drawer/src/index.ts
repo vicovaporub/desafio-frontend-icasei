@@ -21,5 +21,33 @@ window.onload = () => {
   const mode = getModeParameter();
   document.body.className = ''
   document.body.classList.add(mode!);
+
+  if (document.body.className === 'favs') {
+    favsButton.style.backgroundColor = '#90caf9';
+    favsButton.style.color = '#fff';
+    videosButton.style.backgroundColor = '#fff';
+    videosButton.style.color = '#90caf9';
+
+    videosButton.addEventListener('mouseover', () => {
+      videosButton.style.backgroundColor = '#007aff'
+      videosButton.style.color = '#fff'
+    })
+
+    videosButton.addEventListener('mouseout', () => {
+      videosButton.style.backgroundColor = '#fff'
+      videosButton.style.color = '#90caf9'
+    })
+
+    favsButton.addEventListener('mouseover', () => {
+      favsButton.style.backgroundColor = '#007aff'
+      favsButton.style.color = '#fff'
+    })
+
+    favsButton.addEventListener('mouseout', () => {
+      favsButton.style.backgroundColor = '#fff'
+      favsButton.style.color = '#90caf9'
+    })
+    
+  }
 }
 

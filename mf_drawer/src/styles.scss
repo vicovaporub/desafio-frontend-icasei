@@ -1,22 +1,27 @@
 .link-list {
-  list-style: none;
   display: flex;
+  flex-direction: row;
   justify-content: center;
+  list-style: none;
   gap: 1rem;
 
   .nav-link {
+    display: flex;
+    text-align: center;
     text-decoration: none;
-    color: #000;
     font-size: 1.5rem;
     font-weight: 500;
     transition: color 0.3s;
 
     a {
-      text-decoration: none;
+      display: inline-block;
+      width: 100px;
+      border: 1px solid #90caf9;
       background-color: #90caf9;
+      text-decoration: none;
       color: #fff;
       padding: 0.5rem 1rem;
-      border-radius: 5px;
+      border-radius: 4px;
       font-size: 1.5rem;
       font-weight: 500;
       transition: background-color 0.6s;
@@ -32,8 +37,18 @@
         background-color: #fff;
         color: #90caf9;
         border: 1px solid #90caf9;
+
+        &:hover {
+          background-color: #f0f0f0;
+        }
       }
     }
-  }
+  } 
 }
 
+@media screen and (min-width: 200px ) and (max-width: 350px) {
+    .link-list {
+      flex-direction: column;
+      gap: 2rem;
+    }
+}
