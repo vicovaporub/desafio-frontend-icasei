@@ -1,4 +1,4 @@
-import { VideoComponent } from "./components.js"
+import { VideoComponent } from "./video-component.js"
 const searchInput = document.getElementById('search-input') as HTMLInputElement
 const searchButton = document.getElementById('search-button') as HTMLButtonElement
 const videoList = document.getElementById('video-list') as HTMLUListElement
