@@ -4,14 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Main HTML</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-    <h1>Main html to integrate microfront</h1>
-    <div id="drawer-container">
-        <iframe src="{{DRAWER_URL}}" width="100%" height="100px"></iframe>
-    </div>
-    <div id="videos-container">
-        <iframe src="{{VIDEOS_URL}}" width="100%" height="400px"></iframe>
-    </div>
+    <main id="main-content" class="main-content">
+        <section id="bff-drawer" class="bff-drawer">
+            <div id="drawer-container" class="drawer-container">
+                <iframe src="{{DRAWER_URL}}" width="100%" height="100%" class="drawer-iframe" frameborder="0"></iframe>
+            </div>
+        </section>
+        <section id="bff-videos" class="bff-videos">
+            <div id="videos-container" class="videos-container">
+                <iframe src="{{VIDEOS_URL}}" width="100%" height="100%" class="videos-iframe" frameborder="0" scrolling="no"></iframe>
+            </div>
+        </section>
+    </main>
 </body>
 </html>
