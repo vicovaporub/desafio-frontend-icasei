@@ -11,7 +11,6 @@ favsButton!.addEventListener('click', (event) => {
   top!.window.location.href = 'http://localhost:3000/favs'
 });
 
-
 const getModeParameter = () => {
   const urlParams = new URLSearchParams(window.location.search);
   return urlParams.get('mode');
@@ -48,5 +47,56 @@ window.onload = () => {
       favsButton.style.color = '#fff';
     });
 }
+
+
 }
+
+
+// const fetchFavorites = async (): Promise<number> => {
+//   try {
+//       const response = await fetch('http://localhost:3000/storage/favorites');
+//       if (!response.ok) {
+//           throw new Error('Failed to fetch favorites');
+//       }
+//       const data = await response.json();
+//       return data.length; // Assuming data is an array and we want the length
+//   } catch (error) {
+//       console.error('Error fetching favorites:', error);
+//       return 0; // Default to 0 if fetch fails
+//   }
+// }
+
+//  async function updateStarText() {
+//   const favoritesCount = await fetchFavorites();
+//   const starComponent = document.querySelector('star-component');
+//   if (starComponent) {
+//       starComponent.setAttribute('star-text', `${favoritesCount}`);
+//   }
+// }
+
+
+const fetchFavorites = async (): Promise<number> => {
+  try {
+      const response = await fetch('http://localhost:3000/storage/favorites');
+      if (!response.ok) {
+          throw new Error('Failed to fetch favorites');
+      }
+      const data = await response.json();
+      return data.length; // Assuming data is an array and we want the length
+  } catch (error) {
+      console.error('Error fetching favorites:', error);
+      return 0; // Default to 0 if fetch fails
+  }
+};
+
+async function updateStarText() {
+  const favoritesCount = await fetchFavorites();
+  const starComponent = document.querySelector('star-component');
+  if (starComponent) {
+      starComponent.setAttribute('star-text', `${favoritesCount}`);
+  }
+}
+
+
+updateStarText();
 

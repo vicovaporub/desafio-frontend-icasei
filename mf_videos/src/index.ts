@@ -1,3 +1,4 @@
+import { get } from "http"
 import { VideoComponent } from "./video-component.js"
 const searchInput = document.getElementById('search-input') as HTMLInputElement
 const searchButton = document.getElementById('search-button') as HTMLButtonElement
@@ -92,8 +93,6 @@ const handleSearch = async (event: Event): Promise<void> => {
   }
 };
 
-
-
 const getModeParameter = () => {
   const urlParams = new URLSearchParams(window.location.search);
   return urlParams.get('mode');
@@ -101,40 +100,47 @@ const getModeParameter = () => {
 
 window.onload = () => {
   const mode = getModeParameter();
-  document.body.className = ''
   document.body.classList.add(mode!);
 }
 
+const getFavs = async() => {
+  try {
+    const response = fetch(`http://localhost:3000/storage/favorites`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
 
-const consoleLogFavs = () => {
-  const favorites = JSON.parse(localStorage.getItem('favorite_videos') || '[]');
-  console.log('Favorites:', favorites);
+    const favorites = await (await response).json();
 
-  favorites.forEach((fav: Favorite) => {
+    favList.innerHTML = '';
 
-    const listItem = document.createElement('li');
-    listItem.setAttribute('class', 'video-list-item');
-    const videoComponent = new VideoComponent();
+    favorites.forEach((favorite: Favorite) => {
+      const listItem = document.createElement('li');
+      listItem.setAttribute('class', 'video-list-item');
+      const videoComponent = new VideoComponent();
 
-    videoComponent.setAttribute('video-id', fav.id);
-    videoComponent.setAttribute('video-title', fav.title);
-    videoComponent.setAttribute('video-channel', fav.channel);
-    videoComponent.setAttribute('video-thumbnail', fav.thumbnail);
+      videoComponent.setAttribute('video-id', favorite.id);
+      videoComponent.setAttribute('video-title', favorite.title);
+      videoComponent.setAttribute('video-channel', favorite.channel);
+      videoComponent.setAttribute('video-thumbnail', favorite.thumbnail);
 
-    console.log(listItem)
+      listItem.appendChild(videoComponent);
 
-    listItem.appendChild(videoComponent);
-    listItem.style.listStyle = 'none';
+      favList.appendChild(listItem);
 
-    favList.appendChild(listItem);
+      listItem.style.listStyle = 'none';
+    });
 
-
-  });
+  } catch (error) {
+    console.log('Error:', error);
+    return undefined;
+  }
 }
+getFavs()
 
-consoleLogFavs()
 
 searchButton.addEventListener('click', handleSearch);
 searchInput.addEventListener('keydown', handleSearch);
-
 
