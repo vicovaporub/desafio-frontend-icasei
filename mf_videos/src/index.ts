@@ -143,3 +143,9 @@ getFavs()
 searchButton.addEventListener('click', handleSearch);
 searchInput.addEventListener('keydown', handleSearch);
 
+
+const sum = (a: number, b: number): number => {
+  return a + b;
+}
+
+export { sum }
