@@ -157,6 +157,7 @@ export class VideoComponent extends HTMLElement {
         cursor: pointer;
         transition: transform 0.1s ease-in-out, color 0.3s ease-in-out;
         transform-origin: center center;
+        font-weight: bold;
       }
   
       .fav-button:hover {
@@ -164,7 +165,7 @@ export class VideoComponent extends HTMLElement {
       }
   
       .fav-button.favorited {
-        color: #e0cd1dc9; 
+        color: #d1b726; 
       }
   
       @media (min-width: 768px) {
@@ -188,7 +189,7 @@ export class VideoComponent extends HTMLElement {
     shadow.appendChild(style);
   
     this.favButtonElement.addEventListener('click', () => {
-      this.handleFavorite();
+      this.handleFavorite(); 
     });
   }
 
@@ -221,14 +222,12 @@ export class VideoComponent extends HTMLElement {
                 if (data.isFavorite) {
                     this.favButtonElement.classList.add('favorited');
                     console.log('Video added to favorites on server:', data.video);
+                    window.parent.postMessage(`One video added to favorites`, 'http://localhost:3000')
+                    
                 } else {
                     this.favButtonElement.classList.remove('favorited');
                     console.log('Video removed from favorites on server:', data.video);
-                }
-
-                // Set refresh flag in microfrontend 1 if needed
-                if (data.isFavorite) {
-                    localStorage.setItem('refreshFavorites', `true`);
+                    window.parent.postMessage(`One video added to favorites`, 'http://localhost:3000')
                 }
             })
             .catch(error => {
@@ -240,48 +239,52 @@ export class VideoComponent extends HTMLElement {
 }
 
   
-  // handleFavorite() {
-  //   const videoId = this.getAttribute('video-id');
-  //   const videoTitle = this.getAttribute('video-title');
-  //   const videoChannel = this.getAttribute('video-channel');
-  //   const videoThumbnail = this.getAttribute('video-thumbnail');
-  
-  //   if (videoId && videoTitle && videoChannel && videoThumbnail) {
-  //     const requestOptions = {
-  //       method: 'POST',
-  //       headers: { 'Content-Type': 'application/json' },
-  //       body: JSON.stringify({
-  //         id: videoId,
-  //         title: videoTitle,
-  //         channel: videoChannel,
-  //         thumbnail: videoThumbnail
-  //       })
-  //     };
-  
-  //     fetch('http://localhost:3000/storage/favorites', requestOptions)
-  //       .then(response => {
-  //         if (!response.ok) {
-  //           throw new Error('Failed to update favorite status');
-  //         }
-  //         return response.json();
-  //       })
-  //       .then(data => {
-  //         if (data.isFavorite) {
-  //           this.favButtonElement.classList.add('favorited');
-  //           console.log('Video added to favorites on server:', data.video);
-  //         } else {
-  //           this.favButtonElement.classList.remove('favorited');
-  //           console.log('Video removed from favorites on server:', data.video);
-  //         }
-  //       })
-  //       .catch(error => {
-  //         console.error('Error updating favorite status:', error);
-  //       });
-  //   } else {
-  //     console.error('Missing video information');
-  //   }
-  // }
+// handleFavorite() {
+//   const videoId = this.getAttribute('video-id');
+//   const videoTitle = this.getAttribute('video-title');
+//   const videoChannel = this.getAttribute('video-channel');
+//   const videoThumbnail = this.getAttribute('video-thumbnail');
 
+//   if (videoId && videoTitle && videoChannel && videoThumbnail) {
+//     // Retrieve current favorites from localStorage
+//     let favorites = JSON.parse(localStorage.getItem('favorite_videos') || '{}');
+
+//     if (favorites[videoId]) {
+//       // Video already favorited, so remove it
+//       delete favorites[videoId];
+//       localStorage.setItem('favorite_videos', JSON.stringify(favorites));
+
+//       this.favButtonElement.classList.remove('favorited');
+
+//       console.log('Video removed from favorites:', {
+//         videoID: videoId,
+//         title: videoTitle,
+//         channel: videoChannel,
+//         thumb: videoThumbnail
+//       });
+//     } else {
+//       // Add the video to favorites
+//       favorites[videoId] = {
+//         title: videoTitle,
+//         channel: videoChannel,
+//         thumb: videoThumbnail
+//       };
+
+//       localStorage.setItem('favorite_videos', JSON.stringify(favorites));
+
+//       this.favButtonElement.classList.add('favorited');
+
+//       console.log('Video added to favorites:', {
+//         videoID: videoId,
+//         title: videoTitle,
+//         channel: videoChannel,
+//         thumb: videoThumbnail
+//       });
+//     }
+//   } else {
+//     console.error('Missing video information');
+//   }
+// }
   
 
   updateFavoriteButtonState() {
@@ -303,7 +306,6 @@ export class VideoComponent extends HTMLElement {
         })
         .catch(error => {
           console.error('Error fetching favorite status:', error);
-          // Handle error scenarios, e.g., display error message or fallback to alternative UI state
         });
     }
   }

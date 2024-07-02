@@ -82,10 +82,10 @@ const fetchFavorites = async (): Promise<number> => {
           throw new Error('Failed to fetch favorites');
       }
       const data = await response.json();
-      return data.length; // Assuming data is an array and we want the length
+      return data.length; 
   } catch (error) {
       console.error('Error fetching favorites:', error);
-      return 0; // Default to 0 if fetch fails
+      return 0; 
   }
 };
 
@@ -97,6 +97,16 @@ async function updateStarText() {
   }
 }
 
+window.addEventListener('message', (event) => {
+  if (event.origin !== 'http://localhost:3000') {
+      return;
+  }
+  console.log('message recieved: ', event.data);
+  updateStarText();
 
-updateStarText();
+})
+
+updateStarText()
+
+
 

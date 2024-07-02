@@ -11,7 +11,7 @@ const app = express()
 const port = 3000
 
 app.use(cors())
-app.use(express.json())
+app.use(express.json()) 
 
 app.use(express.static('public'))
 
@@ -26,7 +26,7 @@ const templateBuilder = (param: string = '') => {
   .replace(/{{DRAWER_URL}}/g, DRAWER_URL_PARAM)
 
   return finalTemplate
-}
+} 
 
 app.get('/videos', (req: Request, res: Response) => {
   console.log(`entrou no videos`)
@@ -88,7 +88,6 @@ interface FavoriteVideos {
 
 let favoriteVideos: FavoriteVideos[] = [];
 
-// Endpoint to handle POST request for adding/removing favorite videos
 
 app.post('/storage/favorites', (req, res) => {
   const { id, title, channel, thumbnail } = req.body;
@@ -97,35 +96,26 @@ app.post('/storage/favorites', (req, res) => {
       return res.status(400).json({ error: 'Missing or invalid video information' });
   }
 
-  // Check if video already exists in favorites
   const existingIndex = favoriteVideos.findIndex(video => video.id === id);
 
   if (existingIndex !== -1) {
-      // Video exists, remove from favorites
       favoriteVideos.splice(existingIndex, 1);
       console.log(`Video removed from favorites: ${title}`);
 
-      // Respond with updated status and data
       return res.json({ isFavorite: false, video: { id, title, channel, thumbnail } });
   } else {
-      // Video doesn't exist, add to favorites
       favoriteVideos.push({ id, title, channel, thumbnail });
       console.log(`Video added to favorites: ${title}`);
 
-      res.setHeader('X-Refresh-Microfrontend', 'true');
-      // Respond with updated status and data
       return res.json({ isFavorite: true, video: { id, title, channel, thumbnail } });
   }
 
-  // Set a custom response header to trigger refresh in microfrontend 1 (if needed)
 });
 
 
-// Endpoint to check if a video is favorited
 app.get('/storage/favorites/:videoId', (req, res) => {
   const videoId = req.params.videoId;
 
-  // Check if video exists in favorites
   const isFavorite = favoriteVideos.some(video => video.id === videoId);
 
   res.json({ isFavorite });
