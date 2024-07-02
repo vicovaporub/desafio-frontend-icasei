@@ -22,51 +22,65 @@
     a {
       display: inline-block;
       width: 100px;
-      border: 1px solid #42a5f6;
-      box-shadow: 0px 0px 0px 0.2px rgba(44, 125, 179, 0.3);
-      background-color: #42a5f6;
       text-decoration: none;
-      color: #fff;
       padding: 0.5rem 1rem;
       border-radius: 4px;
       font-size: 1.5rem;
       font-weight: 500;
-      transition: background-color 0.6s;
-
-      &:hover {
-        background-color:#007aff
-      }
-
-      &:active {
-        transform: scale(0.9);
-      }
+      transition: background-color 0.6s; 
 
     }
  
-    &:last-child {
-      a{
-        background-color: #fff;
-        color: #90caf9;
-        border: 1px solid #90caf9;
-
-        &:hover {
-          background-color: #007aff;
-          color: #fff;
-        }
-
-        &:active {
-          transform: scale(0.9);
-        }
-      }
-    }
   } 
+}
+
+.videos-link {
+  color: #fff;
+  border: 1px solid #42a5f6;
+  box-shadow: 0px 0px 0px 0.2px rgba(44, 125, 179, 0.3);
+  background-color: #42a5f6;
+
+  &:hover {
+    background-color:#007aff
+  }
+
+  &:active {
+    transform: scale(0.9);
+  }
+}
+
+.favs-link{
+  background-color: #fff;
+  color: #90caf9;
+  border: 1px solid #90caf9;
+
+  &:hover {
+    background-color: #007aff;
+    color: #fff;
+  }
+
+  &:active {
+    transform: scale(0.9);
+  }
+}
+
+.fav-button-container {
+  position: relative;
+}
+
+.star-component {
+  position: absolute;
+  top: 5%;
+  left: 70%;
+  margin: 1rem;
+
 }
 
 
 @media screen and (min-width: 200px ) and (max-width: 350px) {
     .link-list {
       flex-direction: column;
-      gap: 2rem;
+      gap: 1rem;
       margin: 10px auto;
     }
 

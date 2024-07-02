@@ -1,4 +1,3 @@
-import { get } from "http"
 import { VideoComponent } from "./video-component.js"
 const searchInput = document.getElementById('search-input') as HTMLInputElement
 const searchButton = document.getElementById('search-button') as HTMLButtonElement
