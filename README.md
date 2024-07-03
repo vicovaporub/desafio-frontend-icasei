@@ -10,6 +10,10 @@ Teste feito para o processo seletivo para a vaga de Desenvolvedor FrontEnd na iC
 
    ```bash
    git clone https://github.com/vicovaporub/desafio-frontend-icasei.git
+
+   ```
+
+   ```bash
    cd desafio-frontend-icasei
 
    ```
@@ -19,7 +23,7 @@ Teste feito para o processo seletivo para a vaga de Desenvolvedor FrontEnd na iC
    ```bash
    cd bff
    npm i
-   npm build
+   npm run build
 
    ```
 
@@ -28,7 +32,7 @@ Teste feito para o processo seletivo para a vaga de Desenvolvedor FrontEnd na iC
    ```bash
    cd ../mf_drawer
    npm i
-   npm build
+   npm run build
 
    ```
 
@@ -37,7 +41,7 @@ Teste feito para o processo seletivo para a vaga de Desenvolvedor FrontEnd na iC
    ```bash
    cd ../mf_videos
    npm i
-   npm build
+   npm run build
 
    ```
 
@@ -60,7 +64,7 @@ Teste feito para o processo seletivo para a vaga de Desenvolvedor FrontEnd na iC
       - YT_API_KEY=SUA_CHAVE_DE_ACESSO
       - YT_API_URL=https://www.googleapis.com/youtube/v3/search
 
-   # Substitua SUA_CHAVE_DE_ACESSO pela sua chave de acesso
+   # Substitua SUA_CHAVE_DE_ACESSO pela sua chave de acesso e salve o arquivo
 
    ```
 
@@ -68,11 +72,14 @@ Teste feito para o processo seletivo para a vaga de Desenvolvedor FrontEnd na iC
 
    ```bash
    docker compose build --no-cache
+
     # Esperar a montagem
 
    docker compose up
 
    ```
+
+   Por padrão o projeto estará disponível no http://localhost:3000
 
 7. Realizando os testes unitários (considerando o terminal na pasta principal do projeto)
 
@@ -95,4 +102,14 @@ Teste feito para o processo seletivo para a vaga de Desenvolvedor FrontEnd na iC
    cd mf_videos
    npm test
 
+   ```
+
+   **NOTA:** Comandos para rodar manualmente (sem Docker):
+
+   ```bash
+      # BFF
+      nodemon
+
+      # MF_DRAWER e MF_VIDEOS
+      npm start
    ```
