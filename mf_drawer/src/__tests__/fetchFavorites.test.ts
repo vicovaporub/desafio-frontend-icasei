@@ -7,7 +7,7 @@ describe("fetch function to get the length of the favorites list", () => {
     fetchMock.resetMocks();
   });
 
-  it("should return the length of the favorites list", async () => {
+  test("should return the length of the favorites list", async () => {
     fetchMock.mockResponseOnce(JSON.stringify(mockFavorites));
 
     const result = await fetchFavorites();
@@ -15,7 +15,7 @@ describe("fetch function to get the length of the favorites list", () => {
     expect(result).toBe(mockFavorites.length);
   });
 
-  it("should return 0 if the fetch fails", async () => {
+  test("should return 0 if the fetch fails", async () => {
     fetchMock.mockReject(new Error("Failed to fetch"));
 
     const result = await fetchFavorites();
