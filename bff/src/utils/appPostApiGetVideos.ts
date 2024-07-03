@@ -7,7 +7,10 @@ export const postApiGetVideos = async (req: Request, res: Response) => {
   const YT_API_URL = process.env.YT_API_URL;
   const part = "snippet";
   const type = "video";
-  const maxResults = 21;
+
+  // I'm setting maxResults as 10, but it can be changed
+  // pt-BR Estou colocando maxResults como 10, mas pode ser alterado
+  const maxResults = 10;
 
   const serverUrl = `${process.env.SERVER_URL}:${process.env.MAIN_PORT}`;
 
