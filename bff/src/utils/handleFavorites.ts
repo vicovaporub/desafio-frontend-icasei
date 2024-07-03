@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
 
-interface FavoriteVideos {
+export interface FavoriteVideos {
   id: string;
   title: string;
   channel: string;
   thumbnail: string;
 }
 
-let favoriteVideos: FavoriteVideos[] = [];
+export let favoriteVideos: FavoriteVideos[] = [];
 
 export const postStorageFavorites = (req: Request, res: Response) => {
   const { id, title, channel, thumbnail } = req.body;
