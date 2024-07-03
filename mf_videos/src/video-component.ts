@@ -99,7 +99,12 @@ export class VideoComponent extends HTMLElement {
         border-radius: 5px;
         transition: transform 0.3s ease-in-out;
       }
-  
+
+      .video-player {
+        width: 100%;
+        height: 195px;
+      }
+
       .video-thumbnail-container:hover {
         cursor: pointer;
       }
@@ -121,10 +126,6 @@ export class VideoComponent extends HTMLElement {
         transform: translate(-50%, -50%) scale(1.2);
       }
   
-      .video-player {
-        width: 100%;
-        height: 195px;
-      }
   
       .video-info {
         display: flex;
@@ -171,8 +172,8 @@ export class VideoComponent extends HTMLElement {
       @media (min-width: 768px) {
         .video-player {
           margin: 0;
-          width: 400px;
-          height: 230px;
+          width: 350px;
+          height: 200px;
         }
   
         .video-channel {
@@ -242,53 +243,6 @@ export class VideoComponent extends HTMLElement {
       console.error("Missing video information");
     }
   }
-
-  // handleFavorite() {
-  //   const videoId = this.getAttribute('video-id');
-  //   const videoTitle = this.getAttribute('video-title');
-  //   const videoChannel = this.getAttribute('video-channel');
-  //   const videoThumbnail = this.getAttribute('video-thumbnail');
-
-  //   if (videoId && videoTitle && videoChannel && videoThumbnail) {
-  //     // Retrieve current favorites from localStorage
-  //     let favorites = JSON.parse(localStorage.getItem('favorite_videos') || '{}');
-
-  //     if (favorites[videoId]) {
-  //       // Video already favorited, so remove it
-  //       delete favorites[videoId];
-  //       localStorage.setItem('favorite_videos', JSON.stringify(favorites));
-
-  //       this.favButtonElement.classList.remove('favorited');
-
-  //       console.log('Video removed from favorites:', {
-  //         videoID: videoId,
-  //         title: videoTitle,
-  //         channel: videoChannel,
-  //         thumb: videoThumbnail
-  //       });
-  //     } else {
-  //       // Add the video to favorites
-  //       favorites[videoId] = {
-  //         title: videoTitle,
-  //         channel: videoChannel,
-  //         thumb: videoThumbnail
-  //       };
-
-  //       localStorage.setItem('favorite_videos', JSON.stringify(favorites));
-
-  //       this.favButtonElement.classList.add('favorited');
-
-  //       console.log('Video added to favorites:', {
-  //         videoID: videoId,
-  //         title: videoTitle,
-  //         channel: videoChannel,
-  //         thumb: videoThumbnail
-  //       });
-  //     }
-  //   } else {
-  //     console.error('Missing video information');
-  //   }
-  // }
 
   updateFavoriteButtonState() {
     const videoId = this.getAttribute("video-id");

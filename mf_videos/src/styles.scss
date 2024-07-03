@@ -61,10 +61,11 @@
   display: flex;
   flex-direction: column;
   list-style: none;
-  padding: 0px;
+  padding: 0;
   margin: 0;
+  position: relative; 
+  width: 100%; 
 }
-
 
 .video-list {
   padding: 0;
@@ -86,7 +87,19 @@
 
 
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 1150px) {
+
+  .video-list-item {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    padding: 10px;
+    margin: 0;
+    width: 25vw;
+    position: relative;
+  }
+
+
   .videos-header {
     justify-content: start;
     margin-top: 10px;
@@ -106,14 +119,6 @@
     gap: 20px; 
   }
 
-  .video-list-item {
-    display: flex;
-    flex-direction: column;
-    list-style: none;
-    padding: 10px;
-    margin: 0;
-    width: 25vw;
-  }
   
   .video-channel {
     padding-bottom: 10px;
