@@ -1,3 +1,3 @@
-import { startPage } from "./utils/startPage.js";
+import { startMfDrawer } from "./utils/startMfDrawer.js";
 
-startPage();
+startMfDrawer();

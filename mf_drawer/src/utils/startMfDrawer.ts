@@ -1,7 +1,7 @@
 import { getModeParameter } from "./getModeParameter.js";
 import { updateStarText } from "./updateStarText.js";
 
-export const startPage = () => {
+export const startMfDrawer = () => {
   const videosButton = document.getElementById(
     "videos-link"
   ) as HTMLAnchorElement;

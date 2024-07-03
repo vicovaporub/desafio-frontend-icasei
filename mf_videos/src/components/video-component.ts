@@ -64,11 +64,10 @@ export class VideoComponent extends HTMLElement {
     mainContainer.appendChild(this.infoContainer);
 
     shadow.appendChild(mainContainer);
-
     const showVideo = () => {
       const videoId = this.getAttribute("video-id");
       if (videoId) {
-        const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&controls=1`;
+        const embedUrl = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&controls=1`;
         this.iframeElement.src = embedUrl;
         this.iframeElement.style.display = "block";
 
