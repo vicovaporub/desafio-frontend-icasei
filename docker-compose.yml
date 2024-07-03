@@ -7,11 +7,12 @@ services:
       - ./bff:/app
       - /app/node_modules
     environment:
+      - SERVER_URL=http://localhost
+      - MAIN_PORT=3000
       - DRAWER_URL=http://localhost:3001
       - VIDEOS_URL=http://localhost:3002
       - YT_API_KEY=
       - YT_API_URL=https://www.googleapis.com/youtube/v3/search
-      - YT_API_REFERER=http://localhost:3000
   mf_drawer:
     build: ./mf_drawer
     ports:

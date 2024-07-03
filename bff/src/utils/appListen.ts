@@ -1,4 +1,5 @@
-const port = 3000;
 export const listen = () => {
-  console.log(`APP listening at http://localhost:${port}`);
+  console.log(
+    `BFF listening at ${process.env.SERVER_URL}:${process.env.MAIN_PORT}`
+  );
 };
