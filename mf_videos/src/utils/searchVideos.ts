@@ -29,13 +29,6 @@ interface Thumbnail {
   width: number;
 }
 
-interface Favorite {
-  channel: string;
-  thumbnail: string;
-  id: string;
-  title: string;
-}
-
 export const searchVideos = async (
   videoList: HTMLUListElement
 ): Promise<Video | undefined> => {

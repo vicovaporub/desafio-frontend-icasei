@@ -8,5 +8,8 @@ module.exports = {
       moduleNameMapper: {
         '(.+)\\.js': '$1'
     },
-    extensionsToTreatAsEsm: ['.ts']
+    extensionsToTreatAsEsm: ['.ts'],
+    setupFilesAfterEnv: ['./setupTests.js'],
+    testMatch: ['**/__tests__/**/*.test.ts', '**/__tests__/**/*.spec.ts'],
+    moduleFileExtensions: ['ts', 'tsx', 'js', 'json'],
   };

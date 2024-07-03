@@ -37,7 +37,6 @@ export const getFavs = async (favList: HTMLUListElement) => {
       listItem.style.listStyle = "none";
     });
   } catch (error) {
-    console.log("Error:", error);
     return undefined;
   }
 };
