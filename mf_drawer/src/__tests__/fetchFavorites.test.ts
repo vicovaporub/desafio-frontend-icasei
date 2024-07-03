@@ -1,4 +1,4 @@
-import { fetchFavorites } from "../index";
+import { fetchFavorites } from "../utils/fetchFavorites";
 import fetchMock from "jest-fetch-mock";
 import mockFavorites from "../../__mocks__/mockStorageFavs.json";
 
