@@ -3,8 +3,6 @@ import axios from "axios";
 import path from "path";
 import fs from "fs";
 
-export const sum = (a: number, b: number) => a + b; //TODO: TIRAR DAQUI
-
 const port = 3000;
 
 interface FavoriteVideos {
@@ -49,32 +47,38 @@ export const appGetHome = (req: Request, res: Response) => {
 };
 
 export const postApiGetVideos = async (req: Request, res: Response) => {
-  console.log(`Request recieved: ${req.body}`);
-  const query = req.body.text;
-  console.log("query:", query);
-  const YT_API_KEY = process.env.YT_API_KEY;
-  const YT_API_URL = process.env.YT_API_URL;
-  const part = "snippet";
-  const type = "video";
-  const maxResults = 2;
+  const mockJson = fs.readFileSync(
+    path.join(__dirname, "", "mock.json"),
+    "utf8"
+  );
+  res.send(mockJson);
 
-  const searchParamsString = `?q=${query}&key=${YT_API_KEY}&part=${part}&type=${type}&maxResults=${maxResults}`;
-  console.log(`${YT_API_URL}${searchParamsString}`);
+  // console.log(`Request recieved: ${req.body}`);
+  // const query = req.body.text;
+  // console.log("query:", query);
+  // const YT_API_KEY = process.env.YT_API_KEY;
+  // const YT_API_URL = process.env.YT_API_URL;
+  // const part = "snippet";
+  // const type = "video";
+  // const maxResults = 2;
 
-  try {
-    const response = await axios.get(`${YT_API_URL}${searchParamsString}`, {
-      headers: {
-        "Content-Type": "application/json",
-        Referer: process.env.YT_API_REFERER,
-      },
-    });
+  // const searchParamsString = `?q=${query}&key=${YT_API_KEY}&part=${part}&type=${type}&maxResults=${maxResults}`;
+  // console.log(`${YT_API_URL}${searchParamsString}`);
 
-    const videos = response.data.items;
-    console.log(videos);
-    res.send(videos);
-  } catch (error) {
-    console.log("Error:", error);
-  }
+  // try {
+  //   const response = await axios.get(`${YT_API_URL}${searchParamsString}`, {
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Referer: process.env.YT_API_REFERER,
+  //     },
+  //   });
+
+  //   const videos = response.data.items;
+  //   console.log(videos);
+  //   res.send(videos);
+  // } catch (error) {
+  //   console.log("Error:", error);
+  // }
 };
 
 export const postStorageFavorites = (req: Request, res: Response) => {
