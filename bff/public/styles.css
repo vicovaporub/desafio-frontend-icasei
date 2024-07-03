@@ -1,7 +1,6 @@
 body {
-    background-color: #f0f0f0;
+    background-color: #e2e2e2de;
 }
-
 .main-content {
     display: flex;
     padding: 20px;
@@ -22,16 +21,18 @@ body {
 .drawer-container {
     width: 100%;
     height: 100%;
-    border: 1px solid #c5e3ed;
-    background-color: #c5e3ed;
+    border: 1px solid #f0f0f0;
+    background-color: #f0f0f0;
+    box-shadow: 0 0 5px 2px rgba(50, 50, 50, 0.25);
     border-radius: 4px;
 }
 
 .videos-container {
     width: 100%;
     height: 100%;
-    border: 1px solid #c5e3ed;
-    background-color: #c5e3ed;
+    border: 1px solid #f0f0f0;
+    background-color: #f0f0f0;
+    box-shadow: 0 0 5px 2px rgba(50, 50, 50, 0.25);
     border-radius: 4px;
 }
 
