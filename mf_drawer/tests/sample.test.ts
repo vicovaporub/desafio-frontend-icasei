@@ -1,4 +1,14 @@
-import { fetchFavorites } from '../src/index';
+import {
+  expect,
+  jest,
+  test,
+  describe,
+  beforeAll,
+  beforeEach,
+  afterAll,
+  afterEach,
+} from "@jest/globals";
+import { fetchFavorites } from "../src/index";
 
 global.fetch = jest.fn(() =>
   Promise.resolve({
@@ -7,24 +17,22 @@ global.fetch = jest.fn(() =>
   })
 ) as jest.Mock;
 
-
-describe('fetchFavorites function', () => {
+describe("fetchFavorites function", () => {
   beforeEach(() => {
     (global.fetch as jest.Mock).mockClear();
   });
 
-  it('should fetch favorites and return the number of favorited videos', async () => {
+  test("should fetch favorites and return the number of favorited videos", async () => {
     const count = await fetchFavorites();
     expect(count).toEqual(3);
     expect(global.fetch).toHaveBeenCalledTimes(1);
   });
 
-  it('should return 0 on fetch failure', async () => {
-    (global.fetch as jest.Mock).mockImplementationOnce(() => Promise.resolve({ ok: false }));
+  test("should return 0 on fetch failure", async () => {
+    (global.fetch as jest.Mock).mockImplementationOnce(() =>
+      Promise.resolve({ ok: false })
+    );
     const count = await fetchFavorites();
     expect(count).toEqual(0);
   });
 });
-
-
-

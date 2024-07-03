@@ -1,15 +1,15 @@
 export class StarComponent extends HTMLElement {
-    private starElement: HTMLDivElement;
-    private starIconElement: HTMLDivElement;
-    private starTextElement: HTMLDivElement;
+  private starElement: HTMLDivElement;
+  private starIconElement: HTMLDivElement;
+  private starTextElement: HTMLDivElement;
 
-    constructor() {
-        super();
+  constructor() {
+    super();
 
-        const shadow = this.attachShadow({ mode: 'open' });
+    const shadow = this.attachShadow({ mode: "open" });
 
-        const style = document.createElement('style');
-        style.textContent = `
+    const style = document.createElement("style");
+    style.textContent = `
             .star-container {
                 display: inline-block;
                 position: relative;
@@ -40,17 +40,17 @@ export class StarComponent extends HTMLElement {
             }
         `;
 
-        shadow.appendChild(style);
+    shadow.appendChild(style);
 
-        const mainContainer = document.createElement('div');
-        mainContainer.setAttribute('class', 'star-container');
+    const mainContainer = document.createElement("div");
+    mainContainer.setAttribute("class", "star-container");
 
-        this.starElement = document.createElement('div');
-        this.starElement.setAttribute('class', 'star');
+    this.starElement = document.createElement("div");
+    this.starElement.setAttribute("class", "star");
 
-        this.starIconElement = document.createElement('div');
-        this.starIconElement.setAttribute('class', 'star-icon');
-        this.starIconElement.innerHTML = `
+    this.starIconElement = document.createElement("div");
+    this.starIconElement.setAttribute("class", "star-icon");
+    this.starIconElement.innerHTML = `
             <svg height="40px" width="40px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
                  viewBox="0 0 47.94 47.94" xml:space="preserve">
                 <path style="fill:#d1b726;" d="M26.285,2.486l5.407,10.956c0.376,0.762,1.103,1.29,1.944,1.412l12.091,1.757
@@ -61,29 +61,26 @@ export class StarComponent extends HTMLElement {
                     C22.602,0.567,25.338,0.567,26.285,2.486z"/>
             </svg>`;
 
-        this.starTextElement = document.createElement('div');
-        this.starTextElement.setAttribute('class', 'star-text');
+    this.starTextElement = document.createElement("div");
+    this.starTextElement.setAttribute("class", "star-text");
 
-        this.starElement.appendChild(this.starIconElement);
-        this.starElement.appendChild(this.starTextElement);
+    this.starElement.appendChild(this.starIconElement);
+    this.starElement.appendChild(this.starTextElement);
 
-        mainContainer.appendChild(this.starElement);
+    mainContainer.appendChild(this.starElement);
 
-        shadow.appendChild(mainContainer);
+    shadow.appendChild(mainContainer);
+  }
+
+  static get observedAttributes() {
+    return ["star-text"];
+  }
+
+  attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+    if (name === "star-text") {
+      this.starTextElement.textContent = newValue;
     }
-
-    static get observedAttributes() {
-        return ['star-text'];
-    }
-
-    attributeChangedCallback(name: string, oldValue: string, newValue: string) {
-        if (name === 'star-text') {
-            this.starTextElement.textContent = newValue;
-        }
-    }
- 
-
-    
+  }
 }
 
-customElements.define('star-component', StarComponent);
+customElements.define("star-component", StarComponent);

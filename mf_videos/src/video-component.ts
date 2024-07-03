@@ -10,20 +10,20 @@ export class VideoComponent extends HTMLElement {
 
   constructor() {
     super();
-  
-    const shadow = this.attachShadow({ mode: 'open' });
-  
-    const mainContainer = document.createElement('div');
-    mainContainer.setAttribute('class', 'search-video-container');
-  
-    this.thumbnailContainer = document.createElement('div');
-    this.thumbnailContainer.setAttribute('class', 'video-thumbnail-container');
-  
-    this.thumbnailElement = document.createElement('img');
-    this.thumbnailElement.setAttribute('class', 'video-thumbnail');
-  
-    this.playButtonElement = document.createElement('div');
-    this.playButtonElement.setAttribute('class', 'play-button');
+
+    const shadow = this.attachShadow({ mode: "open" });
+
+    const mainContainer = document.createElement("div");
+    mainContainer.setAttribute("class", "search-video-container");
+
+    this.thumbnailContainer = document.createElement("div");
+    this.thumbnailContainer.setAttribute("class", "video-thumbnail-container");
+
+    this.thumbnailElement = document.createElement("img");
+    this.thumbnailElement.setAttribute("class", "video-thumbnail");
+
+    this.playButtonElement = document.createElement("div");
+    this.playButtonElement.setAttribute("class", "play-button");
     this.playButtonElement.innerHTML = `
       <svg fill="#ff0000" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
         viewBox="0 0 260 180" enable-background="new 0 0 260 180" xml:space="preserve">
@@ -31,56 +31,56 @@ export class VideoComponent extends HTMLElement {
           M102,130V50l68,40L102,130z"/>
       </svg>
     `;
-  
+
     this.thumbnailContainer.appendChild(this.thumbnailElement);
     this.thumbnailContainer.appendChild(this.playButtonElement);
-  
-    this.iframeElement = document.createElement('iframe');
-    this.iframeElement.setAttribute('class', 'video-player');
-    this.iframeElement.style.display = 'none';
-    this.iframeElement.setAttribute('frameborder', '0');
-    this.iframeElement.setAttribute('allowfullscreen', 'true');
-  
-    this.infoContainer = document.createElement('div');
-    this.infoContainer.setAttribute('class', 'video-info');
-  
-    this.titleElement = document.createElement('h2');
-    this.titleElement.setAttribute('class', 'video-title');
+
+    this.iframeElement = document.createElement("iframe");
+    this.iframeElement.setAttribute("class", "video-player");
+    this.iframeElement.style.display = "none";
+    this.iframeElement.setAttribute("frameborder", "0");
+    this.iframeElement.setAttribute("allowfullscreen", "true");
+
+    this.infoContainer = document.createElement("div");
+    this.infoContainer.setAttribute("class", "video-info");
+
+    this.titleElement = document.createElement("h2");
+    this.titleElement.setAttribute("class", "video-title");
     this.infoContainer.appendChild(this.titleElement);
-    
-    this.favButtonElement = document.createElement('div');
-    this.favButtonElement.setAttribute('class', 'fav-button');
+
+    this.favButtonElement = document.createElement("div");
+    this.favButtonElement.setAttribute("class", "fav-button");
     this.favButtonElement.innerHTML = `★`;
-    this.updateFavoriteButtonState(); 
-  
+    this.updateFavoriteButtonState();
+
     this.infoContainer.appendChild(this.favButtonElement);
-    
-    this.channelElement = document.createElement('p');
-    this.channelElement.setAttribute('class', 'video-channel');
+
+    this.channelElement = document.createElement("p");
+    this.channelElement.setAttribute("class", "video-channel");
     this.infoContainer.appendChild(this.channelElement);
-  
+
     mainContainer.appendChild(this.thumbnailContainer);
     mainContainer.appendChild(this.iframeElement);
     mainContainer.appendChild(this.infoContainer);
-  
+
     shadow.appendChild(mainContainer);
-  
+
     const showVideo = () => {
-      const videoId = this.getAttribute('video-id');
+      const videoId = this.getAttribute("video-id");
       if (videoId) {
         const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&controls=1`;
         this.iframeElement.src = embedUrl;
-        this.iframeElement.style.display = 'block';
-  
-        this.thumbnailElement.style.display = 'none';
-        this.playButtonElement.style.display = 'none';
+        this.iframeElement.style.display = "block";
+
+        this.thumbnailElement.style.display = "none";
+        this.playButtonElement.style.display = "none";
       }
     };
-  
-    this.thumbnailContainer.addEventListener('click', showVideo);
-    this.playButtonElement.addEventListener('click', showVideo);
-  
-    const style = document.createElement('style');
+
+    this.thumbnailContainer.addEventListener("click", showVideo);
+    this.playButtonElement.addEventListener("click", showVideo);
+
+    const style = document.createElement("style");
     style.textContent = `
       .search-video-container {
         position: relative;
@@ -185,157 +185,155 @@ export class VideoComponent extends HTMLElement {
         }
       }
     `;
-  
+
     shadow.appendChild(style);
-  
-    this.favButtonElement.addEventListener('click', () => {
-      this.handleFavorite(); 
+
+    this.favButtonElement.addEventListener("click", () => {
+      this.handleFavorite();
     });
   }
 
   handleFavorite() {
-    const videoId = this.getAttribute('video-id');
-    const videoTitle = this.getAttribute('video-title');
-    const videoChannel = this.getAttribute('video-channel');
-    const videoThumbnail = this.getAttribute('video-thumbnail');
-  
+    const videoId = this.getAttribute("video-id");
+    const videoTitle = this.getAttribute("video-title");
+    const videoChannel = this.getAttribute("video-channel");
+    const videoThumbnail = this.getAttribute("video-thumbnail");
+
     if (videoId && videoTitle && videoChannel && videoThumbnail) {
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                id: videoId,
-                title: videoTitle,
-                channel: videoChannel,
-                thumbnail: videoThumbnail
-            })
-        };
-  
-        fetch('http://localhost:3000/storage/favorites', requestOptions)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Failed to update favorite status');
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.isFavorite) {
-                    this.favButtonElement.classList.add('favorited');
-                    console.log('Video added to favorites on server:', data.video);
-                    window.parent.postMessage(`One video added to favorites`, 'http://localhost:3000')
-                    
-                } else {
-                    this.favButtonElement.classList.remove('favorited');
-                    console.log('Video removed from favorites on server:', data.video);
-                    window.parent.postMessage(`One video added to favorites`, 'http://localhost:3000')
-                }
-            })
-            .catch(error => {
-                console.error('Error updating favorite status:', error);
-            });
-    } else {
-        console.error('Missing video information');
-    }
-}
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: videoId,
+          title: videoTitle,
+          channel: videoChannel,
+          thumbnail: videoThumbnail,
+        }),
+      };
 
-  
-// handleFavorite() {
-//   const videoId = this.getAttribute('video-id');
-//   const videoTitle = this.getAttribute('video-title');
-//   const videoChannel = this.getAttribute('video-channel');
-//   const videoThumbnail = this.getAttribute('video-thumbnail');
-
-//   if (videoId && videoTitle && videoChannel && videoThumbnail) {
-//     // Retrieve current favorites from localStorage
-//     let favorites = JSON.parse(localStorage.getItem('favorite_videos') || '{}');
-
-//     if (favorites[videoId]) {
-//       // Video already favorited, so remove it
-//       delete favorites[videoId];
-//       localStorage.setItem('favorite_videos', JSON.stringify(favorites));
-
-//       this.favButtonElement.classList.remove('favorited');
-
-//       console.log('Video removed from favorites:', {
-//         videoID: videoId,
-//         title: videoTitle,
-//         channel: videoChannel,
-//         thumb: videoThumbnail
-//       });
-//     } else {
-//       // Add the video to favorites
-//       favorites[videoId] = {
-//         title: videoTitle,
-//         channel: videoChannel,
-//         thumb: videoThumbnail
-//       };
-
-//       localStorage.setItem('favorite_videos', JSON.stringify(favorites));
-
-//       this.favButtonElement.classList.add('favorited');
-
-//       console.log('Video added to favorites:', {
-//         videoID: videoId,
-//         title: videoTitle,
-//         channel: videoChannel,
-//         thumb: videoThumbnail
-//       });
-//     }
-//   } else {
-//     console.error('Missing video information');
-//   }
-// }
-  
-
-  updateFavoriteButtonState() {
-    const videoId = this.getAttribute('video-id');
-    if (videoId) {
-      fetch(`http://localhost:3000/storage/favorites/${videoId}`)
-        .then(response => {
+      fetch("http://localhost:3000/storage/favorites", requestOptions)
+        .then((response) => {
           if (!response.ok) {
-            throw new Error('Failed to fetch favorite status');
+            throw new Error("Failed to update favorite status");
           }
           return response.json();
         })
-        .then(data => {
+        .then((data) => {
           if (data.isFavorite) {
-            this.favButtonElement.classList.add('favorited');
+            this.favButtonElement.classList.add("favorited");
+            console.log("Video added to favorites on server:", data.video);
+            window.parent.postMessage(
+              `One video added to favorites`,
+              "http://localhost:3000"
+            );
           } else {
-            this.favButtonElement.classList.remove('favorited');
+            this.favButtonElement.classList.remove("favorited");
+            console.log("Video removed from favorites on server:", data.video);
+            window.parent.postMessage(
+              `One video added to favorites`,
+              "http://localhost:3000"
+            );
           }
         })
-        .catch(error => {
-          console.error('Error fetching favorite status:', error);
+        .catch((error) => {
+          console.error("Error updating favorite status:", error);
+        });
+    } else {
+      console.error("Missing video information");
+    }
+  }
+
+  // handleFavorite() {
+  //   const videoId = this.getAttribute('video-id');
+  //   const videoTitle = this.getAttribute('video-title');
+  //   const videoChannel = this.getAttribute('video-channel');
+  //   const videoThumbnail = this.getAttribute('video-thumbnail');
+
+  //   if (videoId && videoTitle && videoChannel && videoThumbnail) {
+  //     // Retrieve current favorites from localStorage
+  //     let favorites = JSON.parse(localStorage.getItem('favorite_videos') || '{}');
+
+  //     if (favorites[videoId]) {
+  //       // Video already favorited, so remove it
+  //       delete favorites[videoId];
+  //       localStorage.setItem('favorite_videos', JSON.stringify(favorites));
+
+  //       this.favButtonElement.classList.remove('favorited');
+
+  //       console.log('Video removed from favorites:', {
+  //         videoID: videoId,
+  //         title: videoTitle,
+  //         channel: videoChannel,
+  //         thumb: videoThumbnail
+  //       });
+  //     } else {
+  //       // Add the video to favorites
+  //       favorites[videoId] = {
+  //         title: videoTitle,
+  //         channel: videoChannel,
+  //         thumb: videoThumbnail
+  //       };
+
+  //       localStorage.setItem('favorite_videos', JSON.stringify(favorites));
+
+  //       this.favButtonElement.classList.add('favorited');
+
+  //       console.log('Video added to favorites:', {
+  //         videoID: videoId,
+  //         title: videoTitle,
+  //         channel: videoChannel,
+  //         thumb: videoThumbnail
+  //       });
+  //     }
+  //   } else {
+  //     console.error('Missing video information');
+  //   }
+  // }
+
+  updateFavoriteButtonState() {
+    const videoId = this.getAttribute("video-id");
+    if (videoId) {
+      fetch(`http://localhost:3000/storage/favorites/${videoId}`)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Failed to fetch favorite status");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          if (data.isFavorite) {
+            this.favButtonElement.classList.add("favorited");
+          } else {
+            this.favButtonElement.classList.remove("favorited");
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching favorite status:", error);
         });
     }
   }
-  
 
-  
-  
   static get observedAttributes() {
-    return ['video-id', 'video-title', 'video-channel', 'video-thumbnail'];
+    return ["video-id", "video-title", "video-channel", "video-thumbnail"];
   }
-  
+
   attributeChangedCallback(name: string, oldValue: string, newValue: string) {
-    if (name.toLowerCase() === 'video-title') {
+    if (name.toLowerCase() === "video-title") {
       this.titleElement.textContent = newValue;
     }
-  
-    if (name.toLowerCase() === 'video-channel') {
+
+    if (name.toLowerCase() === "video-channel") {
       this.channelElement.textContent = newValue;
     }
-  
-    if (name.toLowerCase() === 'video-thumbnail') {
+
+    if (name.toLowerCase() === "video-thumbnail") {
       this.thumbnailElement.src = newValue;
     }
-  
-    if (name.toLowerCase() === 'video-id') {
+
+    if (name.toLowerCase() === "video-id") {
       this.updateFavoriteButtonState();
     }
   }
-  
-  
 }
 
-customElements.define('video-component', VideoComponent);
+customElements.define("video-component", VideoComponent);
