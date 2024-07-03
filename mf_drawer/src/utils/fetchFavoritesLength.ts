@@ -1,4 +1,4 @@
-export const fetchFavorites = async (): Promise<number> => {
+export const fetchFavoritesLength = async (): Promise<number> => {
   try {
     const response = await fetch("http://localhost:3000/storage/favorites");
     if (!response.ok) {
