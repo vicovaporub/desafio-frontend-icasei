@@ -5,6 +5,7 @@ services:
       - "3000:3000"
     volumes:
       - ./bff:/app
+      - /app/node_modules
   mf_drawer:
     build: ./mf_drawer
     ports:

@@ -4,6 +4,7 @@ WORKDIR /app
 
 COPY package*.json ./
 
+RUN npm i -g live-server
 RUN npm install
 
 COPY . .
