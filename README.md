@@ -79,7 +79,7 @@ Teste feito para o processo seletivo para a vaga de Desenvolvedor FrontEnd na iC
 
    ```
 
-   Por padrão o projeto estará disponível no http://localhost:3000
+   Por padrão o projeto estará disponível no http://localhost:3000 por completo, MF_DRAWER no http://localhost:3001 e MF_VIDEOS no http://localhost:3002
 
 7. Realizando os testes unitários (considerando o terminal na pasta principal do projeto)
 
