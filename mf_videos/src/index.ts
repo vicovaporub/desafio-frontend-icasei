@@ -1,9 +1,4 @@
 import { VideoComponent } from "./video-component.js"
-const searchInput = document.getElementById('search-input') as HTMLInputElement
-const searchButton = document.getElementById('search-button') as HTMLButtonElement
-const videoList = document.getElementById('video-list') as HTMLUListElement
-const favList = document.getElementById('favs-list') as HTMLUListElement
-
 
 interface Video {
   etag: string;
@@ -41,10 +36,12 @@ interface Favorite {
   title: string
 }
 
-const searchVideos = async (): Promise<Video | undefined> => {
-  const text = searchInput.value;
+export const searchVideos = async (videoList: HTMLUListElement): Promise<Video | undefined> => {
+  const input = document.getElementById('search-input') as HTMLInputElement;
+  const text = input.value
+
   if (!text) {
-    return undefined;
+    return;
   }
 
   try {
@@ -85,24 +82,13 @@ const searchVideos = async (): Promise<Video | undefined> => {
   }
 };
 
-
-const handleSearch = async (event: Event): Promise<void> => {
-  if (event.type === 'click' || (event instanceof KeyboardEvent && event.key === 'Enter')) {
-    await searchVideos();
-  }
-};
-
 const getModeParameter = () => {
   const urlParams = new URLSearchParams(window.location.search);
   return urlParams.get('mode');
 }
 
-window.onload = () => {
-  const mode = getModeParameter();
-  document.body.classList.add(mode!);
-}
 
-const getFavs = async() => {
+export const getFavs = async(favList: HTMLUListElement) => {
   try {
     const response = fetch(`http://localhost:3000/storage/favorites`, {
       method: 'GET',
@@ -110,42 +96,64 @@ const getFavs = async() => {
         'Content-Type': 'application/json'
       }
     })
-
+    
     const favorites = await (await response).json();
-
+    
     favList.innerHTML = '';
-
+    
     favorites.forEach((favorite: Favorite) => {
       const listItem = document.createElement('li');
       listItem.setAttribute('class', 'video-list-item');
       const videoComponent = new VideoComponent();
-
+      
       videoComponent.setAttribute('video-id', favorite.id);
       videoComponent.setAttribute('video-title', favorite.title);
       videoComponent.setAttribute('video-channel', favorite.channel);
       videoComponent.setAttribute('video-thumbnail', favorite.thumbnail);
-
+      
       listItem.appendChild(videoComponent);
 
       favList.appendChild(listItem);
-
+      
       listItem.style.listStyle = 'none';
     });
-
+    
   } catch (error) {
     console.log('Error:', error);
     return undefined;
   }
 }
-getFavs()
 
-
-searchButton.addEventListener('click', handleSearch);
-searchInput.addEventListener('keydown', handleSearch);
-
-
-const sum = (a: number, b: number): number => {
-  return a + b;
+export const handleSearchFactory = (videoList: HTMLUListElement) => {
+  return async (event: Event): Promise<void> => {
+    if ( event.type === 'click' || (event instanceof KeyboardEvent && event.key === 'Enter')) {
+      await searchVideos(videoList)
+    }
+  }
 }
 
-export { sum }
+
+export const start = () => {
+  const searchInput = document.getElementById('search-input') as HTMLInputElement
+  const searchButton = document.getElementById('search-button') as HTMLButtonElement
+  const videoList = document.getElementById('video-list') as HTMLUListElement
+  const favList = document.getElementById('favs-list') as HTMLUListElement
+  
+  window.onload = () => {
+    const mode = getModeParameter();
+    document.body.classList.add(mode!);
+  }
+
+
+  getFavs(favList)
+  
+  
+  const handleSearch = handleSearchFactory(videoList);
+  
+  document.addEventListener('DOMContentLoaded', () => {
+    searchButton.addEventListener("click", handleSearch);
+    searchInput.addEventListener("keydown", handleSearch);
+  })
+}
+
+start()

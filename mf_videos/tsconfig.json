@@ -6,7 +6,8 @@
       "outDir": "./public/scripts",
       "rootDir": "./src",
       "strict": true,
-      "esModuleInterop": true
+      "esModuleInterop": true,
+      "lib": ["DOM", "ESNext"]      
     },
     "include": ["src/**/*"],
     "exclude": ["node_modules"]
