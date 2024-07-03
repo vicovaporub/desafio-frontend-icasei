@@ -49,7 +49,6 @@ export const searchVideos = async (
     });
 
     const videos = await response.json();
-    console.log(videos);
 
     videoList.innerHTML = "";
 

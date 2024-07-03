@@ -29,7 +29,6 @@
             if (event.origin !== 'http://localhost:3002') {
                 return
             } else {
-                console.log('Message from videos:', event.data);
                 mfDrawer.postMessage(event.data, 'http://localhost:3001');
             }
 

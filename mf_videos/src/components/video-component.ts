@@ -221,14 +221,12 @@ export class VideoComponent extends HTMLElement {
         .then((data) => {
           if (data.isFavorite) {
             this.favButtonElement.classList.add("favorited");
-            console.log("Video added to favorites on server:", data.video);
             window.parent.postMessage(
               `One video added to favorites`,
               "http://localhost:3000"
             );
           } else {
             this.favButtonElement.classList.remove("favorited");
-            console.log("Video removed from favorites on server:", data.video);
             window.parent.postMessage(
               `One video added to favorites`,
               "http://localhost:3000"

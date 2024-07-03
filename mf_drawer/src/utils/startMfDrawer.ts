@@ -1,6 +1,9 @@
 import { getModeParameter } from "./getModeParameter.js";
 import { updateStarText } from "./updateStarText.js";
 
+//This function is set to initialize all the things that needs to be set in the page when opened
+//pt-BR: Essa função vai iniciar todas as coisas que precisam ser ativadas na página quando ela é aberta
+
 export const startMfDrawer = () => {
   const videosButton = document.getElementById(
     "videos-link"

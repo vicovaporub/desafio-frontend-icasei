@@ -22,7 +22,6 @@ export const postStorageFavorites = (req: Request, res: Response) => {
 
   if (existingIndex !== -1) {
     favoriteVideos.splice(existingIndex, 1);
-    console.log(`Video removed from favorites: ${title}`);
 
     return res.json({
       isFavorite: false,
@@ -30,7 +29,6 @@ export const postStorageFavorites = (req: Request, res: Response) => {
     });
   } else {
     favoriteVideos.push({ id, title, channel, thumbnail });
-    console.log(`Video added to favorites: ${title}`);
 
     return res.json({
       isFavorite: true,

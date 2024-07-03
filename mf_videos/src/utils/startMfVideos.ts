@@ -2,6 +2,9 @@ import { getModeParameter } from "./getModeParameter.js";
 import { getFavs } from "./getFavs.js";
 import { handleSearchFactory } from "./handleSearchFactory.js";
 
+//This function is set to initialize all the things that needs to be set in the page when opened
+//pt-BR: Essa função vai iniciar todas as coisas que precisam ser ativadas na página quando ela é aberta
+
 export const startMfVideos = () => {
   const searchInput = document.getElementById(
     "search-input"
