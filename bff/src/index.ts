@@ -1,16 +1,16 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
+import { appGetVideos } from "./utils/appGetVideos";
+import { appGetFavs } from "./utils/appGetFavs";
+import { appGetHome } from "./utils/appGetHome";
+import { postApiGetVideos } from "./utils/appPostApiGetVideos";
 import {
-  appGetVideos,
-  appGetFavs,
-  appGetHome,
-  postApiGetVideos,
   postStorageFavorites,
   getStorageFavoritesVideoId,
   getStorageFavorites,
-  listen,
-} from "./serverRoutes";
+} from "./utils/handleFavorites";
+import { listen } from "./utils/appListen";
 
 dotenv.config();
 
